@@ -1,8 +1,7 @@
 const playlist = {
   name: 'United States Top 10',
   description: 'The top songs in the US right now.',
-  songs: [
-    {
+  songs: [{
       name: 'thank u, next',
       artists: ['Ariana Grande'],
       image: 'https://i.scdn.co/image/3492042deca1ed9a02e6d46ebe58807bbf8d2a51'
@@ -66,10 +65,11 @@ const playlist = {
       name: 'All I Want for Christmas Is You',
       artists: ['Mariah Carey'],
       image: 'https://i.scdn.co/image/770180da03a8e23ac5ff7847496e9538cf73ce85'
-    },    
+    },
   ]
 };
 
+//HELPER FUNCTIONS
 const objectToHTML = (song) => {
   return `<div class='row mb-2'>
   <div class='col-1'>
@@ -82,6 +82,22 @@ const objectToHTML = (song) => {
 </div>`;
 }
 
+let search = (searchVal) => {
+  let results = [];
+
+  for (let i = 0; i < playlist.songs.length; i++) {
+
+    let song = playlist.songs[i];
+
+    if (song.name.toLowerCase().includes(searchVal.toLowerCase())) {
+      results.push(song)
+    };
+  }
+
+  render(results);
+}
+
+//RENDER FUNCTION
 const render = (songObj) => {
 
   const title = document.querySelector('h1');
@@ -93,95 +109,33 @@ const render = (songObj) => {
   const song_list = document.querySelector('.song-list');
 
   let combinedHTML = '';
-  // for (let i = 0; i < playlist.songs.length; i++) {
-    for (let i = 0; i < songObj.length; i++) {
-    // combinedHTML += objectToHTML(playlist.songs[i]);
+
+  for (let i = 0; i < songObj.length; i++) {
     combinedHTML += objectToHTML(songObj[i]);
   }
 
   song_list.innerHTML = combinedHTML;
-  // console.log(combinedHTML);
 }
-
 
 render(playlist.songs);
 
-let search = (searchVal) => {
-  let results = []; //[{},{},{}]
-
-  for(let i =0; i < playlist.songs.length; i++){
-
-    let song = playlist.songs[i];
-
-    if(song.name.toLowerCase().includes(searchVal.toLowerCase())){
-      results.push(song)};
-    }
-    
-    render(results);
-
-    // render(results);
-    // results = '';
-}
-
+//GLOBAL HTML OBJECTS
 const input = document.querySelector('.js-input');
 
-input.addEventListener('input',function(e){
+//EVENT 
+input.addEventListener('input', function (e) {
   let searchVal = e.target.value;
-  console.log(searchVal);
+  // console.log(searchVal);
   search(searchVal);
-
-  // searchVal = '';
-  // render(playlist); //or state
-
 })
 
 
 
 /*
+STEPS
 1. Get value from search
 2. Loop through songs array
 3. Loop through the name
 4. Access each chracter of the string
 5. Compare value to string to show results
-
-const state = [];
-
-function search(){
-
-  let results = [];
-for(let i =0; i < playlist.songs.length; i++){
-
-let song = playlist.songs[i];
-if(song.toLowerCase().includes(search.value.toLowerCase())){
-  results.push(song.name)
-}
-}
-
-return results;
-
-}
-
-write :
-<div class ='songlist'>
-</div>
-
-
-
-search.addEventListener('input',function(e){
-
-
-})
-target.value() //returns what in search bar; and store into variable
-
-//render what we find
- filter
-search.reduce((e)=>{
-  return `li`;
-},'')
-
-get song list div, insert html ul tags, 
-add search().reduce(`li${currentVal}li`)
-
-
-
 */
